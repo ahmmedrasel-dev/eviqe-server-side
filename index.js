@@ -19,6 +19,11 @@ app.get('/product/:slug', (req, res) => {
   res.send(product);
 })
 
+app.get('/products/:id', (req, res) => {
+  const { id } = req.params;
+  const product = products.find(item => item._id === id);
+  res.send(product)
+})
 app.listen(port, () => {
   console.log('Server is runnign form port', port);
 })
