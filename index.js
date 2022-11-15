@@ -1,10 +1,17 @@
 import express from 'express'
 const app = express();
 import cors from 'cors';
+import * as dotenv from 'dotenv'
+dotenv.config()
+import mongoose from 'mongoose';
 const port = process.env.PORT || 8000;
 app.use(cors())
 import products from './products.js'
 
+
+mongoose.connect(process.env.MONGODB_URL).then(() => {
+  console.log('mongoose connected!')
+})
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
