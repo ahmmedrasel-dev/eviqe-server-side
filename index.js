@@ -7,14 +7,13 @@ import mongoose from 'mongoose';
 const port = process.env.PORT || 8000;
 app.use(cors())
 import products from './products.js'
+import seedRouter from './routes/seedRoutes.js';
 
 
 mongoose.connect(process.env.MONGODB_URL).then(() => {
   console.log('mongoose connected!')
 })
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.use('/api/seed', seedRouter)
 
 app.get('/products', (req, res) => {
   res.send(products);
