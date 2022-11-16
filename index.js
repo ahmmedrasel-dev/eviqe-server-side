@@ -8,22 +8,15 @@ const port = process.env.PORT || 8000;
 app.use(cors())
 import products from './products.js'
 import seedRouter from './routes/seedRoutes.js';
+import productRouter from './routes/productRouter.js';
 
 
 mongoose.connect(process.env.MONGODB_URL).then(() => {
   console.log('mongoose connected!')
 })
 app.use('/api/seed', seedRouter)
+app.use('/api/products', productRouter)
 
-app.get('/products', (req, res) => {
-  res.send(products);
-})
-
-app.get('/product/:slug', (req, res) => {
-  const { slug } = req.params;
-  const product = products.find(item => item.slug === slug);
-  res.send(product);
-})
 
 app.get('/products/:id', (req, res) => {
   const { id } = req.params;
