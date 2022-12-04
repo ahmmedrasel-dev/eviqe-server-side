@@ -6,7 +6,6 @@ import { userTokenGenerator } from '../utilities/jweb_token.js';
 const userRouter = express.Router();
 
 userRouter.post('/signin', async (req, res) => {
-
   let { email, password } = req.body;
 
   let user = await User.findOne({ email: email });
@@ -28,5 +27,24 @@ userRouter.post('/signin', async (req, res) => {
     message: 'User Credentail Does not match!'
   })
 });
+
+userRouter.post('/signup', async (req, res) => {
+  console.log(req.body)
+  const { name, email, password } = req.body
+  const newUser = new User({
+    name,
+    email,
+    password: bcrypt.hashSync(password)
+  })
+
+  const user = await newUser.save();
+  res.send({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: userTokenGenerator(user)
+  });
+})
 
 export default userRouter;
