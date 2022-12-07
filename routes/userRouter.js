@@ -29,7 +29,6 @@ userRouter.post('/signin', async (req, res) => {
 });
 
 userRouter.post('/signup', async (req, res) => {
-  console.log(req.body)
   const { name, email, password } = req.body
   const newUser = new User({
     name,
